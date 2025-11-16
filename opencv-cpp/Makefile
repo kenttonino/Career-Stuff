@@ -1,18 +1,13 @@
-# Compiler used.
-CXX=g++
-
-# Compiler flags.
+CXX = g++
 CXXFLAGS = -I/usr/local/include/opencv4/ -std=c++11
+LDFLAGS = -L/usr/local/lib
+OPENCV_LIBS = -lopencv_core -lopencv_imgcodecs -lopencv_highgui -lopencv_imgproc
 
-# OpenCV include and library paths.
-OPENCV_INCLUDE = $(shell pkg-config opencv4 --cflags -DOPENCV_GENERATE_PKGCONFIG=ON)
-OPENCV_LIBS = $(shell pkg-config opencv4 --libs)
-
-# Source file.
 SRC = ./src/main.cpp
-
-# Executable file.
 TARGET = ./bin/main
 
 build:
-	$(CXX) $(CXXFLAGS) -o $(TARGET)  $(SRC)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS) $(OPENCV_LIBS)
+
+start: build
+	./bin/main
